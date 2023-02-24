@@ -28,9 +28,7 @@ public class crud {
         codtxt.setText("");
         nomtxt.setText("");
         celtxt.setText("");
-        gencom.setToolTipText("");
         emailtxt.setText("");
-        edadcom.setToolTipText("");
     }
     public static Connection getConecction() {
         Connection cn = null;
@@ -58,9 +56,9 @@ public class crud {
                     ps.setString(1, codtxt.getText());
                     ps.setString(2, nomtxt.getText());
                     ps.setString(3, celtxt.getText());
-                    ps.setString(4, (String) gencom.getSelectedItem());
+                    ps.setString(4, gencom.getSelectedItem().toString());
                     ps.setString(5, emailtxt.getText());
-                    ps.setString(6, (String) edadcom.getSelectedItem());
+                    ps.setString(6, edadcom.getSelectedItem().toString());
                     System.out.println(ps);
                     int res = ps.executeUpdate();
                     if (res > 0) {
@@ -69,6 +67,7 @@ public class crud {
                         JOptionPane.showMessageDialog(null,"No sa agregó al estudiante");
                     }
                     cn.close();
+                    limpiar();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -88,9 +87,9 @@ public class crud {
                     while(rs.next()) {
                         nomtxt.setText(rs.getString(2));
                         celtxt.setText(rs.getString(3));
-                        gencom.setToolTipText(rs.getString(4));
+                        gencom.setSelectedItem(rs.getString(4));
                         emailtxt.setText(rs.getString(5));
-                        edadcom.setToolTipText(rs.getString(6));
+                        edadcom.setSelectedItem(rs.getString(6));
                     }
                     cx.close();
                 } catch (Exception ex) {
@@ -109,9 +108,9 @@ public class crud {
                     ps = ct.prepareStatement(qr);
                     ps.setString(1, nomtxt.getText());
                     ps.setString(2, celtxt.getText());
-                    ps.setString(3, (String) gencom.getSelectedItem());
+                    ps.setString(3, gencom.getSelectedItem().toString());
                     ps.setString(4, emailtxt.getText());
-                    ps.setString(5, (String) edadcom.getSelectedItem());
+                    ps.setString(5, edadcom.getSelectedItem().toString());
                     ps.executeUpdate();
                     System.out.println(ps);
                     int res = ps.executeUpdate();
@@ -143,6 +142,8 @@ public class crud {
                     else {
                         JOptionPane.showMessageDialog(null,"Estudiante eliminado correctamente");
                     }
+                    ct.close();
+                    limpiar();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
