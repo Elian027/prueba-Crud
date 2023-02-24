@@ -46,6 +46,24 @@ public class crud {
     }
 
     public crud() {
+        //Cargar los datos al combo box
+        try {
+            Connection ct;
+            ct = getConecction();
+            Statement carGen = ct.createStatement();
+            ResultSet gen = carGen.executeQuery("Select * from genero");
+            while (gen.next()) {
+                gencom.addItem(gen.getString("gnr"));
+            }
+            Statement carEdad = ct.createStatement();
+            ResultSet eda = carEdad.executeQuery("Select * from edad");
+            while (eda.next()) {
+                edadcom.addItem(eda.getString("ed"));
+            }
+            ct.close();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         crearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
